@@ -48,34 +48,18 @@ func subDuration() {
 	}
 }
 
-// func main() {
-// 	fmt.Println(convertUnit("1986-04-16T05:20:00+06:00"))
-// 	fmt.Println(changeDate("2020-05-15 08:00:00"))
-// }
-
-func main() {
+func unixDate(str string) string {
 	const now = 1589570165
-	input := "12 мин. 13 сек."
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	input := scanner.Text()
 	changeInput := strings.ReplaceAll((strings.ReplaceAll(input, " мин. ", "m")), " сек.", "s")
-	// fmt.Println(changeInput)
 	dur, err := time.ParseDuration(changeInput)
 	if err != nil {
 		panic(err)
 	}
-	// min := int(dur.Minutes())
-	//sec := int(dur.Seconds())
-	// fmt.Println("min", min)
-	// fmt.Println("sec", sec)
-
-	currentTime := time.Unix(now, 0)
-	fmt.Println("currentTime", currentTime)
-
-	//utcTime := currentTime.UTC()
-	currentFormat := currentTime.Format("Mon Jan 2 15:04:05 UTC 2006")
-	fmt.Println("currentFormat", currentFormat)
-
-	//	fmt.Println("utcTime", utcTime)
-
-	// result := currentTime.
-	// fmt.Println("result", result)
+	currentTime := time.Unix(now, 0).UTC()
+	res := currentTime.Add(dur)
+	currentFormat := res.Format("Mon Jan 2 15:04:05 UTC 2006")
+	return currentFormat
 }
